@@ -1,0 +1,111 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #34b3f1, #346df1);
+    color: #333;
+}
+
+.register-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    animation: slideIn 1s ease-in-out;
+}
+
+.register-container h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #346df1;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #346df1;
+    outline: none;
+    box-shadow: 0 0 8px rgba(52, 109, 241, 0.3);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #346df1;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #2852b8;
+    transform: scale(1.02);
+}
+
+button:active {
+    transform: scale(1);
+}
+
+.login-link {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.login-link a {
+    color: #346df1;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-link a:hover {
+    color: #2852b8;
+}
+
+/* Animación para el cuadro */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

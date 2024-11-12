@@ -1,0 +1,66 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #a8c4e0;
+}
+
+/* Estilo para la tabla */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #265583; /* Borde suave para celdas */
+    padding: 12px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #007bff;
+    color: rgb(183, 65, 65);
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #c2baba;
+}
+
+.table tbody tr:hover {
+    background-color: #ecefe9;
+}
+
+/* Estilo para los campos del formulario */
+.form-control {
+    border: 1px solid #ced4da; /* Borde de color gris claro */
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Borde azul cuando el campo tiene el foco */
+    outline: none;
+}
+
+/* Estilo para el botón de envío */
+.btn {
+    border: 1px solid #007bff; /* Borde azul para el botón */
+    background-color: #007bff;
+    color: rgb(202, 143, 143);
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
