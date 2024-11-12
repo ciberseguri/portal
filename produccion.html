@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Paradas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="estilo/maquinaparada.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">Registro de Paradas</h2>
+        <form id="addRecordForm">
+            <div class="mb-3">
+                <label for="user_id" class="form-label">Usuario ID:</label>
+                <input type="text" class="form-control" id="user_id" name="user_id" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Nombre Completo:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="user_nrollo" class="form-label">N° Rollo:</label>
+                <input type="text" class="form-control" id="user_nrollo" name="user_nrollo" required>  
+            </div>
+
+            <div class="mb-3">
+                <label for="machine_ot" class="form-label">OT:</label>
+                <input type="text" class="form-control" id="machine_ot" name="machine_ot">
+            </div>
+
+            <div class="mb-3">
+                <label for="machine_id" class="form-label">Máquina:</label>
+                <input type="text" class="form-control" id="machine_id" name="machine_id" required>
+            </div>
+            <div class="mb-3">
+                <label for="structure" class="form-label">Estructura:</label>
+                <input type="text" class="form-control" id="structure" name="structure" required>
+            </div>
+
+            <div class="container">
+                <h2 class="mt-5">Inicio de Producción</h2>
+            </div>
+
+            <div class="mb-3">
+                <label for="start_time" class="form-label">Hora de Inicio:</label>
+                <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="end_time" class="form-label">Hora de Fin:</label>
+                <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="assigned_time" class="form-label">Tiempo Asignado (minutos):</label>
+                <input type="number" class="form-control" id="assigned_time" name="assigned_time" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="revolucion_total" class="form-label">Revolución Total:</label>
+                <input type="number" class="form-control" id="revolucion_total" name="revolucion_total" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="velocidad_promedio" class="form-label">Velocidad Promedio:</label>
+                <input type="number" class="form-control" id="velocidad_promedio" name="velocidad_promedio" required>
+            </div>
+            
+
+            <button type="submit" class="btn btn-primary">Agregar Registro</button>
+        </form>
+
+        <table id="recordsTable" class="table table-bordered mt-5">
+            <thead>
+                <tr>
+                    <th>Usuario ID</th>
+                    <th>OT</th>
+                    <th>Máquina</th>
+                    <th>Hora de Inicio</th>
+                    <th>Hora de Fin</th>
+                    <th>Eficiencia (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Los registros se agregarán aquí -->
+            </tbody>
+        </table>
+
+        <button onclick="exportToExcel()" class="btn btn-success mt-3">Exportar a Excel</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("addRecordForm");
+            const tableBody = document.querySelector("#recordsTable tbody");
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                // Obtener los valores del formulario
+                const userId = document.getElementById("user_id").value;
+                const machineOt = document.getElementById("machine_ot").value; // OT opcional
+                const machineId = document.getElementById("machine_id").value;
+                const startTime = document.getElementById("start_time").value;
+                const endTime = document.getElementById("end_time").value;
+                const assignedTime = parseFloat(document.getElementById("assigned_time").value);
+                const revolutionTotal = parseFloat(document.getElementById("revolucion_total").value);
+                const speedAverage = parseFloat(document.getElementById("velocidad_promedio").value);
+
+                // Calcular el tiempo de parada y la eficiencia
+                const stopTime = (assignedTime - revolutionTotal) / speedAverage; // Cálculo de tiempo de parada
+                const productiveTime = assignedTime - stopTime;
+                const efficiency = ((productiveTime / assignedTime) * 100).toFixed(2);
+
+                // Crear una nueva fila en la tabla
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${userId}</td>
+                    <td>${machineOt}</td>
+                    <td>${machineId}</td>
+                    <td>${startTime}</td>
+                    <td>${endTime}</td>
+                    <td>${efficiency}%</td>
+                `;
+                tableBody.appendChild(row);
+
+                // Limpiar el formulario
+                form.reset();
+            });
+        });
+
+        function exportToExcel() {
+            const table = document.getElementById("recordsTable");
+            const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+            XLSX.writeFile(wb, "registros_paradas.xlsx");
+        }
+    </script>
+</body>
+</html>
